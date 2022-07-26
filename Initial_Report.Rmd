@@ -1,0 +1,92 @@
+---
+title: "Initial Analysis"
+author: "Boyd Tarlinton"
+date: "18/06/2020"
+output: pdf_document
+---
+
+```{r setup}
+library(phyloseq)
+library(qiime2R)
+library(tidyverse)
+library(magrittr)
+library(microbiome)
+library(vegan)
+library(symbioteR)
+```
+
+## 
+
+```{r}
+hiveMB_1 <- qza_to_phyloseq(features = "QIIME_Processing_1/feat_tab.qza",
+    taxonomy = "QIIME_Processing_1/taxonomy.qza")
+
+tax_1 <- read_qza("QIIME_Processing_1/taxonomy.qza")
+tax_table(hiveMB_1) <- as.character(tax_1$data$Taxon) %>%
+  strsplit(";") %>%
+  do.call(what = qpcR:::rbind.na) %>%
+  set_colnames(c("Kingdom", "Phylum", "Class", "Order", "Family", 
+                             "Genus", "Species")) %>%
+  data.frame() %>%
+  lapply(str_replace_all, "D_.__", "") %>%
+  as.data.frame()  %>%
+  set_rownames(tax_1$data$Feature.ID) %>%
+  as.matrix()
+
+hiveMB_2 <- qza_to_phyloseq(features = "QIIME_Processing_2/feat_tab.qza",
+    taxonomy = "QIIME_Processing_2/taxonomy.qza")
+
+tax_2 <- read_qza("QIIME_Processing_2/taxonomy.qza")
+tax_table(hiveMB_2) <- as.character(tax_2$data$Taxon) %>%
+  strsplit(";") %>%
+  do.call(what = qpcR:::rbind.na) %>%
+  set_colnames(c("Kingdom", "Phylum", "Class", "Order", "Family", 
+                             "Genus", "Species")) %>%
+  data.frame() %>%
+  lapply(str_replace_all, "D_.__", "") %>%
+  as.data.frame()  %>%
+  set_rownames(tax_2$data$Feature.ID) %>%
+  as.matrix()
+
+hiveMB <- merge_phyloseq(hiveMB_1, hiveMB_2)
+
+sample_data(hiveMB) <- read.csv("Metadata_03082020.csv") %>%
+  column_to_rownames("ID")
+```
+
+```{r}
+hiveMB <- removeNonbacterial(hiveMB)
+```
+
+```{r}
+makeObservationsRelative(hiveMB) %>%
+  prevalenceFilter(threshold = 0.05) %>%
+  plot_bar(fill = "Class") + facet_wrap(~ Bees + Material, scales = "free_x", nrow = 1)
+```
+
+```{r}
+alphaDiv <- estimate_richness(hiveMB, measures = c("Observed")) %>%
+  cbind(data.frame(sample_data(hiveMB)))
+ggplot(alphaDiv, aes(x = Material, y = Observed, color = Bees)) + geom_boxplot()
+```
+
+```{r}
+hiveMB <- transform(hiveMB, "clr")
+otu_table(hiveMB)[otu_table(hiveMB) <= 0] <- 0
+```
+
+
+```{r}
+ord <- ordinate(hiveMB, distance = "bray", method = "NMDS")
+plot_ordination(hiveMB, ord, color = "Bees", shape = "Material") + 
+  geom_point(size = 3)
+
+dist <- phyloseq::distance(hiveMB, method = "bray")
+adonis(dist ~ Bees + Material + Hive_ID, as(sample_data(hiveMB), "data.frame"))
+```
+
+## Session Info
+
+```{r}
+sessionInfo()
+```
