@@ -1,0 +1,175 @@
+---
+title: "Exploratory Analysis"
+author: 
+  - name: "Boyd Tarlinton"
+    orcid: "0000-0002-4146-7083"
+  - name: "Caroline Hauxwell"
+    corresponding: true
+date: "08/09/2022"
+format: html
+toc: true
+---
+
+#kableextra!
+
+```{r setup, warning=FALSE, message=FALSE}
+library(phyloseq)
+library(qiime2R)
+library(tidyverse)
+library(magrittr)
+library(microbiome)
+library(vegan)
+library(ggforce)
+library(hrbrthemes)
+library(ggh4x)
+library(ggtext)
+source("functions.R")
+```
+
+## Load Data
+
+```{r}
+hiveMB_1 <- readQIIMEFolder("QIIME_Processing_1")
+hiveMB_2 <- readQIIMEFolder("QIIME_Processing_2")
+
+hiveMB <- merge_phyloseq(hiveMB_1, hiveMB_2)
+
+sample_data(hiveMB) <- read_tsv("Metadata_03082020.tsv") |>
+  column_to_rownames("ID")
+```
+
+##Filter Samples
+
+```{r}
+hiveMB <- removeNonbacterial(hiveMB)
+
+hiveMB <- hiveMB |> 
+  subset_samples(Material != "Larvae")
+```
+
+## Plot Alpha Diversity
+
+```{r}
+alphaDiv <- estimate_richness(hiveMB, 
+                              measures = c("Observed")) |>
+  cbind(data.frame(sample_data(hiveMB)))
+
+ggplot(alphaDiv, aes(x = Material, 
+                     y = Observed, 
+                     color = Bees)) + 
+  geom_boxplot()
+```
+
+## Beta Diversity
+
+### Perform Ordination
+
+```{r, results='asis'}
+sample_data(hiveMB) <- sample_data(hiveMB) |> 
+  data.frame() |> 
+  mutate(Year = str_extract(Date_Harvest, "\\d{4}$"),
+         Year = str_replace(Year, "2020", "2019")) |> 
+  data.frame()
+
+hiveMBRel <- hiveMB |> 
+  makeObservationsRelative()
+
+custPal <- viridis::turbo(n = 4)[c(1:2, 4)]
+
+ord <- ordinate(hiveMBRel, 
+                distance = "bray", 
+                method = "NMDS", 
+                k = 4, 
+                maxit = 1000,
+                trace = 0)
+
+ord
+```
+
+### 
+
+```{r}
+ordPlot <- plot_ordination(hiveMBRel, 
+                           ord, 
+                           shape = "Material", 
+                           color = "Bees") + 
+    geom_point(size = 3) +
+    theme_ipsum(base_family = "sans") +
+    geom_mark_hull(aes(x = NMDS1, 
+                       y = NMDS2, 
+                       fill = Year, 
+                       label = Year),
+                   inherit.aes = FALSE,
+                   label.fill = NA,
+                   concavity = 3,
+                   alpha = 0.2) +
+    scale_colour_manual(values = custPal, "Species",
+                        labels = c(expression(paste(italic("A. australis"))),
+                                   expression(paste(italic("T. carbonaria"))),
+                                   expression(paste(italic("T. hockingsi"))))) +
+    scale_fill_brewer(palette = "Pastel2", guide = "none") +
+    scale_shape_manual(values = c(15, 16, 17, 18)) +
+    theme(legend.text.align = 0,
+          text = element_text(family = "sans")) +
+    scale_x_continuous(expand = expansion(add = 0.25)) +
+    scale_y_continuous(expand = expansion(add = 0.5)) + 
+    coord_fixed()
+
+tmp <- tempfile()
+ggsave(tmp, ordPlot, device = "svg", bg = "white", width = 6.5, height = 6)
+rsvg::rsvg_png(tmp, "Figures/Figure1.png")
+```
+
+!["Figure 1"](Figures/Figure1.png)
+
+```{r}
+dist <- phyloseq::distance(hiveMB, method = "bray")
+adonis2(dist ~ Bees + Material + Year + Hive_ID, 
+                as(sample_data(hiveMB), "data.frame"))
+```
+
+## Sample COmposition
+
+```{r}
+relMelted <- hiveMB |>
+  makeObservationsRelative() |>
+  psmelt()
+
+relMelted |> 
+    mutate(Clade = case_when(Genus == "Lactobacillus" ~ Genus,
+                             Genus == "Bombella" ~ Genus,
+                             Genus == "Gilliamella" ~ Genus,
+                             Class == "Gammaproteobacteria" ~ Class,
+                             TRUE ~ "Other"),
+           Year = str_extract(Date_Harvest, "\\d{4}"),
+           Year = case_when(Year == "2020" ~ "2019",
+                            TRUE ~ Year),
+           Hive_ID = substr(Hive_ID, 2, 2)) |>
+    group_by(Sample, Bees, Year, Material, Clade, Hive_ID) |> 
+    summarise(Abundance = sum(Abundance)) |> 
+    ggplot(aes(x = Year, y = Abundance, shape = Hive_ID, color = Material, group = Hive_ID)) +
+    geom_point(position = position_dodge(width = 0.5)) +
+    facet_grid(Bees ~ Clade, labeller = label_wrap_gen()) +
+    hrbrthemes::theme_ipsum() +
+    theme(legend.position = "bottom",
+          panel.spacing = unit(0.5, "lines"),
+          strip.text.y = element_text(face = "italic"))
+
+makeObservationsRelative(hiveMB)  |> 
+  makeObservationsRelative() |> 
+  prevalenceFilter(threshold = 0.05) |>
+  plot_bar(fill = "Class", x = "Hive_ID") + 
+  facet_nested(~ Bees + Material + Year, scales = "free_x", 
+               space = "free_x",
+               nest_line = element_line(linetype = 2)) +
+  theme_ipsum() +
+    theme(panel.spacing = unit(0.5, "lines"),
+          legend.position = "bottom",
+          ggh4x.facet.nestline = element_line(colour = "blue"))
+```
+
+## Session Info
+
+```{r}
+sessionInfo()
+```
