@@ -10,7 +10,7 @@ tax_table(physeq) <- as.character(tax_1$data$Taxon) |>
     set_colnames(c("Kingdom", "Phylum", "Class", "Order", "Family", 
                    "Genus", "Species")) |>
     data.frame() |>
-    lapply(str_replace_all, "D_.__", "") |>
+    lapply(str_replace_all, ".*_", "") |> 
     as.data.frame()  |>
     set_rownames(tax_1$data$Feature.ID) |>
     as.matrix()
