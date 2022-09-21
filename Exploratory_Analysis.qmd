@@ -29,8 +29,8 @@ source("functions.R")
 ## Load Data
 
 ```{r}
-hiveMB_1 <- readQIIMEFolder("QIIME_Processing_1")
-hiveMB_2 <- readQIIMEFolder("QIIME_Processing_2")
+hiveMB_1 <- readQIIMEFolder("Data/H1") #Need to update taxonomy parsing
+hiveMB_2 <- readQIIMEFolder("Data/H2")
 
 hiveMB <- merge_phyloseq(hiveMB_1, hiveMB_2)
 
