@@ -34,7 +34,7 @@ hiveMB_2 <- readQIIMEFolder("QIIME_Processing_2")
 
 hiveMB <- merge_phyloseq(hiveMB_1, hiveMB_2)
 
-sample_data(hiveMB) <- read_tsv("Metadata_03082020.tsv") |>
+sample_data(hiveMB) <- read_tsv("Data/Metadata_03082020.tsv") |>
   column_to_rownames("ID")
 ```
 
