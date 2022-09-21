@@ -147,15 +147,18 @@ relMelted |>
     mutate(Clade = case_when(Genus == "Lactobacillus" ~ Genus,
                              Genus == "Bombella" ~ Genus,
                              Genus == "Gilliamella" ~ Genus,
+                             Genus == "Snodgrassella" ~ Genus,
                              Class == "Gammaproteobacteria" ~ Class,
                              TRUE ~ "Other"),
+           Clade = fct_relevel("Other", after = Inf), 
            Year = str_extract(Date_Harvest, "\\d{4}"),
            Year = case_when(Year == "2020" ~ "2019",
                             TRUE ~ Year),
            Hive_ID = substr(Hive_ID, 2, 2)) |>
     group_by(Sample, Bees, Year, Material, Clade, Hive_ID) |> 
     summarise(Abundance = sum(Abundance)) |> 
-    ggplot(aes(x = Year, y = Abundance, shape = Hive_ID, color = Material, group = Hive_ID)) +
+    ggplot(aes(x = Year, y = Abundance, shape = Hive_ID, 
+               color = Material, group = Hive_ID)) +
     geom_point(position = position_dodge(width = 0.5)) +
     facet_grid(Bees ~ Clade, labeller = label_wrap_gen()) +
     hrbrthemes::theme_ipsum(base_family = "sans") +
@@ -163,17 +166,43 @@ relMelted |>
           panel.spacing = unit(0.5, "lines"),
           strip.text.y = element_text(face = "italic"))
 
-makeObservationsRelative(hiveMB)  |> 
-  makeObservationsRelative() |> 
-  prevalenceFilter(threshold = 0.05) |>
-  plot_bar(fill = "Class", x = "Hive_ID") + 
-  facet_nested(~ Bees + Material + Year, scales = "free_x", 
+hiveMBMod <- hiveMB
+tax_table(hiveMBMod) <- tax_table(hiveMBMod) |> 
+    data.frame() |> 
+    mutate(Clade = case_when(Genus == "Lactobacillus" ~ Genus,
+                             Genus == "Bombella" ~ Genus,
+                             Genus == "Gilliamella" ~ Genus,
+                             Genus == "Snodgrassella" ~ Genus,
+                             Class == "Gammaproteobacteria" ~ Class,
+                             TRUE ~ "Other"), .before = 1) |> 
+  as.matrix()
+
+sd <- sample_data(hiveMBMod) |> 
+    data.frame() |> 
+    mutate(uniqueID = paste0(Hive_ID, Material))
+
+sdUnique <- sd |> 
+  select(Bees, Material, Hive_ID, uniqueID) |> 
+  group_by(uniqueID) |> 
+  summarise_all(unique) |> 
+  column_to_rownames("uniqueID")
+
+hiveMBMod <- hiveMBMod |> 
+  merge_samples(sd$uniqueID)
+
+sample_data(hiveMBMod) <- sdUnique
+
+makeObservationsRelative(hiveMBMod)  |> 
+  tax_glom("Clade") |> 
+  plot_bar(fill = "Clade", x = "Hive_ID") + 
+  facet_nested(~ Bees + Material, scales = "free_x", 
                space = "free_x",
                nest_line = element_line(linetype = 2)) +
   theme_ipsum(base_family = "sans") +
     theme(panel.spacing = unit(0.5, "lines"),
           legend.position = "bottom",
-          ggh4x.facet.nestline = element_line(colour = "blue"))
+          ggh4x.facet.nestline = element_line(colour = "blue")) +
+  scale_fill_viridis_d()
 ```
 
 ## Session Info
