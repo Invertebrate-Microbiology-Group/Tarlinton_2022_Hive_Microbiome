@@ -148,6 +148,7 @@ relMelted |>
                              Genus == "Bombella" ~ Genus,
                              Genus == "Gilliamella" ~ Genus,
                              Genus == "Snodgrassella" ~ Genus,
+                             Genus == "Bombella" ~ Genus,
                              Class == "Gammaproteobacteria" ~ Class,
                              TRUE ~ "Other"),
            Clade = fct_relevel("Other", after = Inf), 
@@ -187,8 +188,13 @@ sdUnique <- sd |>
   summarise_all(unique) |> 
   column_to_rownames("uniqueID")
 
+sample_data(hiveMBMod) <- hiveMBMod |> 
+  sample_data() |> 
+  data.frame() |> 
+  select(-lat_lon)
+
 hiveMBMod <- hiveMBMod |> 
-  merge_samples(sd$uniqueID)
+  merge_samples(as.factor(sd$uniqueID))
 
 sample_data(hiveMBMod) <- sdUnique
 
