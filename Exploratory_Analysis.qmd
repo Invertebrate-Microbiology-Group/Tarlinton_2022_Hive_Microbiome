@@ -148,7 +148,6 @@ relMelted |>
                              Genus == "Bombella" ~ Genus,
                              Genus == "Gilliamella" ~ Genus,
                              Genus == "Snodgrassella" ~ Genus,
-                             Genus == "Bombella" ~ Genus,
                              Class == "Gammaproteobacteria" ~ Class,
                              TRUE ~ "Other"),
            Clade = fct_relevel("Other", after = Inf), 
@@ -208,7 +207,7 @@ makeObservationsRelative(hiveMBMod)  |>
     theme(panel.spacing = unit(0.5, "lines"),
           legend.position = "bottom",
           ggh4x.facet.nestline = element_line(colour = "blue")) +
-  scale_fill_viridis_d()
+  scale_fill_viridis_d(option = "turbo")
 ```
 
 ## Session Info
