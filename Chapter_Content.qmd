@@ -1,0 +1,124 @@
+---
+title: "Chapter Content"
+author: 
+  - name: Boyd Tarlinton
+    orcid: 0000-0002-4146-7083
+    affiliations: qut
+  - name: Flavia Carmelina Massaro
+    orcid: 0000-0003-2558-413X
+    affiliations: qut
+  - name: Caroline Hauxwell
+    orcid: 0000-0002-1681-9657
+    affiliations: qut
+    corresponding: true
+affiliations: 
+  - id: qut
+    name: School of Biology and Environmental Science, QUT
+date: "08/09/2022"
+format: html
+df-print: kable
+toc: true
+self-contained: true
+---
+
+```{r setup, warning=FALSE, message=FALSE}
+library(phyloseq)
+library(qiime2R)
+library(tidyverse)
+library(magrittr)
+library(microbiome)
+library(vegan)
+library(ggforce)
+library(hrbrthemes)
+library(ggh4x)
+library(ggtext)
+source("functions.R")
+```
+
+## Load Data
+
+```{r}
+hiveMB <- readRDS("Out/hiveMB.rds")
+```
+
+## Sample Composition
+
+```{r}
+relMelted <- hiveMB |>
+  makeObservationsRelative() |>
+  psmelt()
+
+relMelted |> 
+    mutate(Clade = case_when(Genus == "Lactobacillus" ~ Genus,
+                             Genus == "Bombella" ~ Genus,
+                             Genus == "Gilliamella" ~ Genus,
+                             Genus == "Snodgrassella" ~ Genus,
+                             Genus == "Bifidobacterium" ~ Genus,
+                             Class == "Gammaproteobacteria" ~ Class,
+                             TRUE ~ "Other"),
+           Clade = fct_relevel("Other", after = Inf), 
+           Year = str_extract(Date_Harvest, "\\d{4}"),
+           Year = case_when(Year == "2020" ~ "2019",
+                            TRUE ~ Year),
+           Hive_ID = substr(Hive_ID, 2, 2)) |>
+    group_by(Sample, Bees, Year, Material, Clade, Hive_ID) |> 
+    summarise(Abundance = sum(Abundance)) |> 
+    ggplot(aes(x = Year, y = Abundance, shape = Hive_ID, 
+               color = Material, group = Hive_ID)) +
+    geom_point(position = position_dodge(width = 0.5)) +
+    facet_grid(Bees ~ Clade, labeller = label_wrap_gen()) +
+    hrbrthemes::theme_ipsum(base_family = "sans") +
+    theme(legend.position = "bottom",
+          panel.spacing = unit(0.5, "lines"),
+          strip.text.y = element_text(face = "italic"))
+
+hiveMBMod <- hiveMB
+tax_table(hiveMBMod) <- tax_table(hiveMBMod) |> 
+    data.frame() |> 
+    mutate(Clade = case_when(Genus == "Lactobacillus" ~ Genus,
+                             Genus == "Bombella" ~ Genus,
+                             Genus == "Gilliamella" ~ Genus,
+                             Genus == "Snodgrassella" ~ Genus,
+                             Genus == "Bifidobacterium" ~ Genus,
+                             Class == "Gammaproteobacteria" ~ Class,
+                             TRUE ~ "Other"), .before = 1) |> 
+  as.matrix()
+
+sd <- sample_data(hiveMBMod) |> 
+    data.frame() |> 
+    mutate(uniqueID = paste0(Hive_ID, Material))
+
+sdUnique <- sd |> 
+  select(Bees, Material, Hive_ID, uniqueID) |> 
+  group_by(uniqueID) |> 
+  summarise_all(unique) |> 
+  column_to_rownames("uniqueID")
+
+sample_data(hiveMBMod) <- hiveMBMod |> 
+  sample_data() |> 
+  data.frame() |> 
+  select(-lat_lon)
+
+hiveMBMod <- hiveMBMod |> 
+  merge_samples(as.factor(sd$uniqueID))
+
+sample_data(hiveMBMod) <- sdUnique
+
+makeObservationsRelative(hiveMBMod)  |> 
+  tax_glom("Clade") |> 
+  plot_bar(fill = "Clade", x = "Hive_ID") + 
+  facet_nested(~ Bees + Material, scales = "free_x", 
+               space = "free_x",
+               nest_line = element_line(linetype = 2)) +
+  theme_ipsum(base_family = "sans") +
+    theme(panel.spacing = unit(0.5, "lines"),
+          legend.position = "bottom",
+          ggh4x.facet.nestline = element_line(colour = "blue")) +
+  scale_fill_viridis_d(option = "turbo")
+```
+
+## Session Info
+
+```{r}
+sessionInfo()
+```

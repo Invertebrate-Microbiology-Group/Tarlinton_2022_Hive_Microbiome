@@ -125,10 +125,10 @@ ordPlot <- plot_ordination(hiveMBRel,
 
 tmp <- tempfile()
 ggsave(tmp, ordPlot, device = "svg", bg = "white", width = 6.5, height = 6)
-rsvg::rsvg_png(tmp, "Figures/Figure1.png")
+rsvg::rsvg_png(tmp, "Out/Figures/Figure1.png")
 ```
 
-!["Figure 1"](Figures/Figure1.png)
+!["Figure 1"](Out/Figures/Figure1.png)
 
 ```{r}
 dist <- phyloseq::distance(hiveMB, method = "bray")
@@ -136,79 +136,12 @@ adonis2(dist ~ Bees + Material + Year + Hive_ID,
                 as(sample_data(hiveMB), "data.frame"))
 ```
 
-## Sample Composition
+## Export Data
 
 ```{r}
-relMelted <- hiveMB |>
-  makeObservationsRelative() |>
-  psmelt()
-
-relMelted |> 
-    mutate(Clade = case_when(Genus == "Lactobacillus" ~ Genus,
-                             Genus == "Bombella" ~ Genus,
-                             Genus == "Gilliamella" ~ Genus,
-                             Genus == "Snodgrassella" ~ Genus,
-                             Class == "Gammaproteobacteria" ~ Class,
-                             TRUE ~ "Other"),
-           Clade = fct_relevel("Other", after = Inf), 
-           Year = str_extract(Date_Harvest, "\\d{4}"),
-           Year = case_when(Year == "2020" ~ "2019",
-                            TRUE ~ Year),
-           Hive_ID = substr(Hive_ID, 2, 2)) |>
-    group_by(Sample, Bees, Year, Material, Clade, Hive_ID) |> 
-    summarise(Abundance = sum(Abundance)) |> 
-    ggplot(aes(x = Year, y = Abundance, shape = Hive_ID, 
-               color = Material, group = Hive_ID)) +
-    geom_point(position = position_dodge(width = 0.5)) +
-    facet_grid(Bees ~ Clade, labeller = label_wrap_gen()) +
-    hrbrthemes::theme_ipsum(base_family = "sans") +
-    theme(legend.position = "bottom",
-          panel.spacing = unit(0.5, "lines"),
-          strip.text.y = element_text(face = "italic"))
-
-hiveMBMod <- hiveMB
-tax_table(hiveMBMod) <- tax_table(hiveMBMod) |> 
-    data.frame() |> 
-    mutate(Clade = case_when(Genus == "Lactobacillus" ~ Genus,
-                             Genus == "Bombella" ~ Genus,
-                             Genus == "Gilliamella" ~ Genus,
-                             Genus == "Snodgrassella" ~ Genus,
-                             Class == "Gammaproteobacteria" ~ Class,
-                             TRUE ~ "Other"), .before = 1) |> 
-  as.matrix()
-
-sd <- sample_data(hiveMBMod) |> 
-    data.frame() |> 
-    mutate(uniqueID = paste0(Hive_ID, Material))
-
-sdUnique <- sd |> 
-  select(Bees, Material, Hive_ID, uniqueID) |> 
-  group_by(uniqueID) |> 
-  summarise_all(unique) |> 
-  column_to_rownames("uniqueID")
-
-sample_data(hiveMBMod) <- hiveMBMod |> 
-  sample_data() |> 
-  data.frame() |> 
-  select(-lat_lon)
-
-hiveMBMod <- hiveMBMod |> 
-  merge_samples(as.factor(sd$uniqueID))
-
-sample_data(hiveMBMod) <- sdUnique
-
-makeObservationsRelative(hiveMBMod)  |> 
-  tax_glom("Clade") |> 
-  plot_bar(fill = "Clade", x = "Hive_ID") + 
-  facet_nested(~ Bees + Material, scales = "free_x", 
-               space = "free_x",
-               nest_line = element_line(linetype = 2)) +
-  theme_ipsum(base_family = "sans") +
-    theme(panel.spacing = unit(0.5, "lines"),
-          legend.position = "bottom",
-          ggh4x.facet.nestline = element_line(colour = "blue")) +
-  scale_fill_viridis_d(option = "turbo")
+saveRDS(hiveMB, "Out/hiveMB.rds")
 ```
+
 
 ## Session Info
 
