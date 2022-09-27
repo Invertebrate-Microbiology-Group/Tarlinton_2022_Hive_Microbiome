@@ -117,6 +117,20 @@ makeObservationsRelative(hiveMBMod)  |>
   scale_fill_viridis_d(option = "turbo")
 ```
 
+## Plot Alpha Diversity
+
+```{r}
+alphaDiv <- estimate_richness(hiveMB, 
+                              measures = c("Observed")) |>
+  cbind(data.frame(sample_data(hiveMB)))
+
+ggplot(alphaDiv, aes(x = Material, 
+                     y = Observed, 
+                     color = Bees)) + 
+  geom_boxplot() +
+  theme_ipsum(base_family = "sans")
+```
+
 ## Session Info
 
 ```{r}

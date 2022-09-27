@@ -53,20 +53,6 @@ sample_data(hiveMB) <- read_tsv("Data/Metadata_03082020.tsv") |>
 hiveMB <- removeNonbacterial(hiveMB)
 ```
 
-## Plot Alpha Diversity
-
-```{r}
-alphaDiv <- estimate_richness(hiveMB, 
-                              measures = c("Observed")) |>
-  cbind(data.frame(sample_data(hiveMB)))
-
-ggplot(alphaDiv, aes(x = Material, 
-                     y = Observed, 
-                     color = Bees)) + 
-  geom_boxplot() +
-  theme_ipsum(base_family = "sans")
-```
-
 ## Beta Diversity
 
 ### Perform Ordination
