@@ -96,18 +96,23 @@ ord
 ### Plot Ordination
 
 ```{r}
-ordPlot <- plot_ordination(hiveMBRel, 
-                           ord, 
-                           shape = "Material", 
-                           color = "Bees") + 
-    geom_point(size = 3) +
+ordPlot <- plot_ordination(hiveMBRel, ord,justDF = TRUE) |> 
+    ggplot(data = _, 
+           aes(x = NMDS2,
+               y = NMDS1,
+               shape = Material, 
+               color = Bees)) +
+    geom_point(size = 3, alpha = 0.8) +
     theme_ipsum(base_family = "sans") +
-    geom_mark_hull(aes(x = NMDS1, 
-                       y = NMDS2, 
+    geom_mark_hull(aes(x = NMDS2, 
+                       y = NMDS1,
+                       x0 = NMDS2,
+                       y0 = NMDS1,
                        fill = Year, 
                        label = Year),
                    inherit.aes = FALSE,
-                   label.hjust = 1,
+                   label.margin = margin(),
+                   con.cap = 0,
                    label.fill = NA,
                    concavity = 3,
                    alpha = 0.2) +
@@ -118,8 +123,11 @@ ordPlot <- plot_ordination(hiveMBRel,
     scale_fill_brewer(palette = "Pastel2", guide = "none") +
     scale_shape_manual(values = c(15, 16, 17, 18)) +
     theme(legend.text.align = 0,
+          legend.position = "bottom",
+          legend.box = "vertical",
+          legend.margin = margin(),
           text = element_text(family = "sans"),
-          aspect.ratio = 1) +
+          aspect.ratio = 3.5/4.5) +
     scale_x_continuous(expand = expansion(add = 0.5)) +
     scale_y_continuous(expand = expansion(add = 0.5))
 
