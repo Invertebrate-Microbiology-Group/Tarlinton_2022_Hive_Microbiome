@@ -44,7 +44,8 @@ hiveMB_2 <- readQIIMEFolder("Data/H2")
 hiveMB <- merge_phyloseq(hiveMB_1, hiveMB_2)
 
 sample_data(hiveMB) <- read_tsv("Data/Metadata_03082020.tsv") |>
-  column_to_rownames("ID")
+  mutate(New_ID = str_replace_all(New_ID, "_", "-")) |> 
+  column_to_rownames("New_ID")
 ```
 
 ##Filter Samples
