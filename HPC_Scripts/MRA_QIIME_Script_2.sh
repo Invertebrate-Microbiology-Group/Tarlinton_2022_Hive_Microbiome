@@ -25,12 +25,5 @@ qiime feature-classifier classify-consensus-blast \
 	--i-query QIIME_Processing/H2/rep_seqs.qza \
 	--i-reference-reads 16S_Taxonomy_DB/silva-138-99-seqs.qza \
 	--i-reference-taxonomy 16S_Taxonomy_DB/silva-138-99-tax.qza \
-	--o-classification QIIME_Processing/H2/taxonomy.qza
+	--o-classification QIIME_Processing/H2/taxonomy.qza \
 	--o-search-results QIIME_Processing/H2/tophits.qza
-qiime alignment mafft \
-	--i-sequences QIIME_Processing/H2/rep_seqs.qza \
-	--p-n-threads 16 \
-	--o-alignment QIIME_Processing/H2/alignment.qza
-qiime phylogeny fasttree \
-	--i-alignment QIIME_Processing/H2/alignment.qza \
-	--o-tree QIIME_Processing/H2/phylogeny.qza
