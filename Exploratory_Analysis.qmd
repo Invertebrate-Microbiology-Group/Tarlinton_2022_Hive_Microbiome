@@ -3,13 +3,16 @@ title: "Exploratory Analysis"
 author: 
   - name: Boyd Tarlinton
     orcid: 0000-0002-4146-7083
-    affiliations: qut
+    affiliations: 
+      - ref: qut
   - name: Flavia Carmelina Massaro
     orcid: 0000-0003-2558-413X
-    affiliations: qut
+    affiliations: 
+      - ref: qut
   - name: Caroline Hauxwell
     orcid: 0000-0002-1681-9657
-    affiliations: qut
+    affiliations: 
+      - ref: qut
     corresponding: true
 affiliations: 
   - id: qut
