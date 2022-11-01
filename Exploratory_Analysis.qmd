@@ -68,6 +68,8 @@ hiveMB <- removeNonbacterial(hiveMB)
 ### Perform Ordination
 
 ```{r, results='asis'}
+set.seed(42)
+
 hiveMBRel <- hiveMB |> 
   makeObservationsRelative()
 
