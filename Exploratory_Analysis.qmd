@@ -31,7 +31,7 @@ library(phyloseq)
 library(qiime2R)
 library(tidyverse)
 library(magrittr)
-library(microbiome)
+library(symbioteR)
 library(vegan)
 library(ggforce)
 library(hrbrthemes)
@@ -46,8 +46,8 @@ source("functions.R")
 ## Load Data
 
 ```{r}
-hiveMB_1 <- readQIIMEFolder("Data/H1") #Need to update taxonomy parsing
-hiveMB_2 <- readQIIMEFolder("Data/H2")
+hiveMB_1 <- readQZAFolder("Data/H1")
+hiveMB_2 <- readQZAFolder("Data/H2")
 
 hiveMB <- merge_phyloseq(hiveMB_1, hiveMB_2)
 
