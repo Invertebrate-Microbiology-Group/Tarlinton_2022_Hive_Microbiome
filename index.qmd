@@ -1,22 +1,5 @@
 ---
 title: "Exploratory Analysis"
-author: 
-  - name: Boyd Tarlinton
-    orcid: 0000-0002-4146-7083
-    affiliations: 
-      - ref: qut
-  - name: Flavia Carmelina Massaro
-    orcid: 0000-0003-2558-413X
-    affiliations: 
-      - ref: qut
-  - name: Caroline Hauxwell
-    orcid: 0000-0002-1681-9657
-    affiliations: 
-      - ref: qut
-    corresponding: true
-affiliations: 
-  - id: qut
-    name: School of Biology and Environmental Science, QUT
 date: "2022-11-03"
 ---
 
@@ -136,8 +119,7 @@ adonis2(dist ~ Bees + Material + Year + Hive_ID,
 
 ## Export Data
 
-We provide a copy of the `phyloseq` object that can be easily imported for 
-further analysis in R.
+We provide a copy of the `phyloseq` object that can be easily imported for further analysis in R.
 
 ```{r}
 saveRDS(hiveMB, "Out/hiveMB.rds")

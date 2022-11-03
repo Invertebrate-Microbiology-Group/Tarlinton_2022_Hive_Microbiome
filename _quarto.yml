@@ -1,6 +1,32 @@
 project:
   type: website
-  output-dir: docs
-format: html
-df-print: kable
-toc: true
+  output-dir: _site
+
+website: 
+  search: false
+  repo-url: https://github.com/Invertebrate-Microbiology-Group/Tarlinton_2022_Hive_Microbiome
+  repo-actions: [issue]
+
+format: 
+  html:
+    theme: cosmo
+    df-print: kable
+    toc: true
+    
+author: 
+  - name: Boyd Tarlinton
+    orcid: 0000-0002-4146-7083
+    affiliations: 
+      - ref: qut
+  - name: Flavia Carmelina Massaro
+    orcid: 0000-0003-2558-413X
+    affiliations: 
+      - ref: qut
+  - name: Caroline Hauxwell
+    orcid: 0000-0002-1681-9657
+    affiliations: 
+      - ref: qut
+    corresponding: true
+affiliations: 
+  - id: qut
+    name: School of Biology and Environmental Science, QUT
