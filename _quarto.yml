@@ -2,10 +2,16 @@ project:
   type: website
   output-dir: _site
 
-website: 
+website:
   search: false
   repo-url: https://github.com/Invertebrate-Microbiology-Group/Tarlinton_2022_Hive_Microbiome
   repo-actions: [issue]
+  navbar:
+    left: 
+      - text: HOME
+        href: index.qmd
+      - text: CC BY 4.0
+        href: LICENSE.md
 
 format: 
   html:
