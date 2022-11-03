@@ -232,16 +232,6 @@
       "Hash": "e9c08b94391e9f3f97355841229124f2",
       "Requirements": []
     },
-    "RcppArmadillo": {
-      "Package": "RcppArmadillo",
-      "Version": "0.11.2.3.1",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "8370a82b0c508599f2fa5a40a36b8102",
-      "Requirements": [
-        "Rcpp"
-      ]
-    },
     "RcppEigen": {
       "Package": "RcppEigen",
       "Version": "0.3.3.9.2",
@@ -263,16 +253,6 @@
       "git_last_commit_date": "2022-05-12",
       "Hash": "2958e31b9b8ea852e487bcb3c24b5b09",
       "Requirements": []
-    },
-    "Rtsne": {
-      "Package": "Rtsne",
-      "Version": "0.16",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "e921b89ef921905fc89b95886675706d",
-      "Requirements": [
-        "Rcpp"
-      ]
     },
     "Rttf2pt1": {
       "Package": "Rttf2pt1",
@@ -380,17 +360,6 @@
       "Repository": "CRAN",
       "Hash": "543776ae6848fde2f48ff3816d0628bc",
       "Requirements": []
-    },
-    "bayesm": {
-      "Package": "bayesm",
-      "Version": "3.1-4",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "79a128bc420b4d0a3debb430b1e91f30",
-      "Requirements": [
-        "Rcpp",
-        "RcppArmadillo"
-      ]
     },
     "biomformat": {
       "Package": "biomformat",
@@ -587,19 +556,6 @@
       "Repository": "CRAN",
       "Hash": "bb4341986bc8b914f0f0acf2e4a3f2f7",
       "Requirements": []
-    },
-    "compositions": {
-      "Package": "compositions",
-      "Version": "2.0-4",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "db2719c9c2910d9d4a3a9f2ce6c8e815",
-      "Requirements": [
-        "MASS",
-        "bayesm",
-        "robustbase",
-        "tensorA"
-      ]
     },
     "concaveman": {
       "Package": "concaveman",
@@ -1378,29 +1334,6 @@
         "nlme"
       ]
     },
-    "microbiome": {
-      "Package": "microbiome",
-      "Version": "1.18.0",
-      "Source": "Bioconductor",
-      "git_url": "https://git.bioconductor.org/packages/microbiome",
-      "git_branch": "RELEASE_3_15",
-      "git_last_commit": "4887f83",
-      "git_last_commit_date": "2022-04-26",
-      "Hash": "907e24a909ee96302e3a252166d6c5d9",
-      "Requirements": [
-        "Biostrings",
-        "Rtsne",
-        "compositions",
-        "dplyr",
-        "ggplot2",
-        "phyloseq",
-        "reshape2",
-        "scales",
-        "tibble",
-        "tidyr",
-        "vegan"
-      ]
-    },
     "mime": {
       "Package": "mime",
       "Version": "0.12",
@@ -1480,10 +1413,10 @@
     },
     "openssl": {
       "Package": "openssl",
-      "Version": "2.0.2",
+      "Version": "2.0.4",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "6d3bef2e305f55c705c674653c7d7d3d",
+      "Hash": "e86c5ffeb8474a9e03d75f5d2919683e",
       "Requirements": [
         "askpass"
       ]
@@ -1661,11 +1594,11 @@
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
-      "RemoteRepo": "qiime2R",
       "RemoteUsername": "jbisanz",
-      "RemoteRef": "HEAD",
+      "RemoteRepo": "qiime2R",
+      "RemoteRef": "master",
       "RemoteSha": "2a3cee181513e7451d9b50fdb455cb71fe30fab8",
-      "Hash": "e34e4e06db40137bd1a52f186dbf7e5e",
+      "Hash": "9b39889bf97b250af8336e70f334f30d",
       "Requirements": [
         "Biostrings",
         "DT",
@@ -2039,6 +1972,27 @@
         "systemfonts"
       ]
     },
+    "symbioteR": {
+      "Package": "symbioteR",
+      "Version": "0.0.0.9000",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "B0ydT",
+      "RemoteRepo": "symbioteR",
+      "RemoteRef": "master",
+      "RemoteSha": "a7d50d963fdb197bcad0e244dfa341ee0a1d6258",
+      "Remotes": "jbisanz/qiime2R",
+      "Hash": "bbf0bf2f84111dfebfca9ed5ffabdb89",
+      "Requirements": [
+        "magrittr",
+        "phyloseq",
+        "qiime2R",
+        "qpcR",
+        "stringr",
+        "tidyr"
+      ]
+    },
     "sys": {
       "Package": "sys",
       "Version": "3.4",
@@ -2056,14 +2010,6 @@
       "Requirements": [
         "cpp11"
       ]
-    },
-    "tensorA": {
-      "Package": "tensorA",
-      "Version": "0.36.2",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "fd792ceac77f96b647fa8d6e1788969a",
-      "Requirements": []
     },
     "tibble": {
       "Package": "tibble",
