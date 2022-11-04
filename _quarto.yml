@@ -15,7 +15,9 @@ website:
 
 format: 
   html:
-    theme: cosmo
+    theme:   
+      light: flatly
+      dark: darkly
     df-print: kable
     toc: true
     

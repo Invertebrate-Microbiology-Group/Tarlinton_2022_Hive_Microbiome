@@ -1,9 +1,39 @@
 ---
-title: "Exploratory Analysis"
-date: "2022-11-03"
+title: Australian Stingless Bee Nest Microbiome
+subtitle: |
+  Supplementary material for the paper *16S Amplicon Metabarcoding from Nest 
+  Materials of Native Australian Stingless Bees*
+date: 2022-11-03
 ---
 
+## Introduction
+
+This repository contains the code and documentation required to reproduce the 
+results presented in our paper "16S Amplicon Metabarcoding from Nest Materials 
+of Native Australian Stingless Bees". We describe how the raw metabarcoding 
+datasets were processed using QIIME 2 and further analysed in R to produce the 
+figure included in our paper. Beta diversity statistics describing microbiome 
+variability associated with the different bee species and material types sampled 
+are calculated, visualised, and used for hypothesis testing.
+
+## Data Availability
+
+All data are available from NCBI SRA with study accession 
+[SRP405832](https://trace.ncbi.nlm.nih.gov/Traces/?view=study&acc=SRP405832).
+
+Samples were sequenced in two batches, identified by the last two characters of 
+each sample name.
+
+## Processing in `QIIME 2`
+
+Raw sequence data were processed on the QUT HPC Lyra. Batches B1 and B2 were 
+analysed separately using the following scripts: 
+[B1](Data/HPC_Scripts/MRA_QIIME_Script.sh), 
+[B2](Data/HPC_Scripts/MRA_QIIME_Script.sh).
+
 ## Setup
+
+Load packages and pre-defined functions.
 
 ```{r setup, warning=FALSE, message=FALSE}
 library(phyloseq)
@@ -17,14 +47,14 @@ library(hrbrthemes)
 library(concaveman)
 library(ggh4x)
 library(ggtext)
-library(rsvg)
-library(svglite)
 source("functions.R")
 ```
 
 ## Load Data
 
-```{r}
+We read the .QZA artifacts as phyloseq objects, merge them, and add metadata.
+
+```{r, message=FALSE}
 hiveMB_1 <- readQZAFolder("Data/H1")
 hiveMB_2 <- readQZAFolder("Data/H2")
 
@@ -36,7 +66,9 @@ sample_data(hiveMB) <- read_tsv("Data/Metadata_20221101.tsv") |>
   column_to_rownames("ID")
 ```
 
-##Filter Samples
+## Filter Samples
+
+We remove any ASVs that were not identified as 
 
 ```{r}
 hiveMB <- removeNonbacterial(hiveMB)
@@ -52,8 +84,6 @@ set.seed(42)
 hiveMBRel <- hiveMB |> 
   makeObservationsRelative()
 
-custPal <- viridis::turbo(n = 4)[c(1:2, 4)]
-
 ord <- ordinate(hiveMBRel, 
                 distance = "bray", 
                 method = "NMDS", 
@@ -67,6 +97,8 @@ ord
 ### Plot Ordination
 
 ```{r}
+custPal <- viridis::turbo(n = 4)[c(1:2, 4)]
+
 ordPlot <- plot_ordination(hiveMBRel, ord,justDF = TRUE) |> 
     ggplot(data = _, 
            aes(x = NMDS2,
@@ -102,9 +134,8 @@ ordPlot <- plot_ordination(hiveMBRel, ord,justDF = TRUE) |>
     scale_x_continuous(expand = expansion(add = 0.5)) +
     scale_y_continuous(expand = expansion(add = 0.5))
 
-tmp <- tempfile()
-ggsave(tmp, ordPlot, device = "svg", bg = "white", width = 6.5, height = 6)
-rsvg_png(tmp, "Out/Figures/Figure1.png")
+ggsave("Out/Figures/Figure1.svg", ordPlot, device = "svg", bg = "white", 
+       width = 6.5, height = 6, dpi = 1200, )
 ```
 
 !["Figure 1"](Out/Figures/Figure1.png)
@@ -119,7 +150,8 @@ adonis2(dist ~ Bees + Material + Year + Hive_ID,
 
 ## Export Data
 
-We provide a copy of the `phyloseq` object that can be easily imported for further analysis in R.
+We provide a copy of the `phyloseq` object that can be easily imported for 
+further analysis in R.
 
 ```{r}
 saveRDS(hiveMB, "Out/hiveMB.rds")
