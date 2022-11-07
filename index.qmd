@@ -3,7 +3,7 @@ title: Australian Stingless Bee Nest Microbiome
 subtitle: |
   Supplementary material for the paper *16S Amplicon Metabarcoding from Nest 
   Materials of Native Australian Stingless Bees*
-date: 2022-11-03
+date: 2022-11-08
 ---
 
 ## Introduction
@@ -47,6 +47,7 @@ library(hrbrthemes)
 library(concaveman)
 library(ggh4x)
 library(ggtext)
+library(svglite)
 source("functions.R")
 ```
 
@@ -60,9 +61,8 @@ hiveMB_2 <- readQZAFolder("Data/H2")
 
 hiveMB <- merge_phyloseq(hiveMB_1, hiveMB_2)
 
-sample_data(hiveMB) <- read_tsv("Data/Metadata_20221101.tsv") |>
-  mutate(Year = str_extract(Date_Harvest, "\\d{4}$"),
-         ID = str_replace_all(ID, "_", "-")) |> 
+sample_data(hiveMB) <- read_tsv("Data/Metadata.tsv") |>
+  mutate(Year = str_extract(Date_Harvest, "\\d{4}$")) |> 
   column_to_rownames("ID")
 ```
 
@@ -99,7 +99,7 @@ ord
 ```{r}
 custPal <- viridis::turbo(n = 4)[c(1:2, 4)]
 
-ordPlot <- plot_ordination(hiveMBRel, ord,justDF = TRUE) |> 
+ordPlot <- plot_ordination(hiveMBRel, ord, justDF = TRUE) |> 
     ggplot(data = _, 
            aes(x = NMDS2,
                y = NMDS1,
@@ -135,7 +135,7 @@ ordPlot <- plot_ordination(hiveMBRel, ord,justDF = TRUE) |>
     scale_y_continuous(expand = expansion(add = 0.5))
 
 ggsave("Out/Figures/Figure1.svg", ordPlot, device = "svg", bg = "white", 
-       width = 6.5, height = 6, dpi = 1200, )
+       width = 6.5, height = 6, dpi = 1200)
 ```
 
 !["Figure 1"](Out/Figures/Figure1.png)
