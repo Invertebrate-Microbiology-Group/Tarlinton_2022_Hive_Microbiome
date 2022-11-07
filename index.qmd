@@ -68,7 +68,8 @@ sample_data(hiveMB) <- read_tsv("Data/Metadata.tsv") |>
 
 ## Filter Samples
 
-We remove any ASVs that were not identified as 
+We remove any mitochondrial or chloroplast ASVs, and any that were unclassified 
+at the kingdom level.
 
 ```{r}
 hiveMB <- removeNonbacterial(hiveMB)
@@ -77,6 +78,9 @@ hiveMB <- removeNonbacterial(hiveMB)
 ## Beta Diversity
 
 ### Perform Ordination
+
+Convert to relative abundance and perform NDMS ordination of Bray-Curtis 
+dissimilarities.
 
 ```{r, results='asis'}
 set.seed(42)
@@ -95,6 +99,8 @@ ord
 ```
 
 ### Plot Ordination
+
+Plot the NMDS ordination.
 
 ```{r}
 custPal <- viridis::turbo(n = 4)[c(1:2, 4)]
@@ -138,14 +144,25 @@ ggsave("Out/Figures/Figure1.svg", ordPlot, device = "svg", bg = "white",
        width = 6.5, height = 6, dpi = 1200)
 ```
 
-!["Figure 1"](Out/Figures/Figure1.png)
+!["Figure 1: NMDS Ordination"](Out/Figures/Figure1.png)
 
 ### Significance Test
+
+Perform a PERMANOVA test.
 
 ```{r}
 dist <- phyloseq::distance(hiveMB, method = "bray")
 adonis2(dist ~ Bees + Material + Year + Hive_ID, 
                 as(sample_data(hiveMB), "data.frame"))
+```
+
+## Abundance Table
+
+We highlight the abundance of a number of key taxonomic groups referenced in 
+the paper.
+
+```{r}
+
 ```
 
 ## Export Data

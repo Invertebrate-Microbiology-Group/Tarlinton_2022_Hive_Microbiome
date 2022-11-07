@@ -169,6 +169,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#plot-ordination" id="toc-plot-ordination" class="nav-link" data-scroll-target="#plot-ordination">Plot Ordination</a></li>
   <li><a href="#significance-test" id="toc-significance-test" class="nav-link" data-scroll-target="#significance-test">Significance Test</a></li>
   </ul></li>
+  <li><a href="#abundance-table" id="toc-abundance-table" class="nav-link" data-scroll-target="#abundance-table">Abundance Table</a></li>
   <li><a href="#export-data" id="toc-export-data" class="nav-link" data-scroll-target="#export-data">Export Data</a></li>
   <li><a href="#session-info" id="toc-session-info" class="nav-link" data-scroll-target="#session-info">Session Info</a></li>
   </ul>
@@ -278,7 +279,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="filter-samples" class="level2">
 <h2 class="anchored" data-anchor-id="filter-samples">Filter Samples</h2>
-<p>We remove any ASVs that were not identified as</p>
+<p>We remove any mitochondrial or chloroplast ASVs, and any that were unclassified at the kingdom level.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>hiveMB <span class="ot">&lt;-</span> <span class="fu">removeNonbacterial</span>(hiveMB)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -287,6 +288,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="beta-diversity">Beta Diversity</h2>
 <section id="perform-ordination" class="level3">
 <h3 class="anchored" data-anchor-id="perform-ordination">Perform Ordination</h3>
+<p>Convert to relative abundance and perform NDMS ordination of Bray-Curtis dissimilarities.</p>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>hiveMBRel <span class="ot">&lt;-</span> hiveMB <span class="sc">|&gt;</span> </span>
@@ -303,10 +305,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Call: metaMDS(comm = veganifyOTU(physeq), distance = distance, k = 4, trace = 0, maxit = 1000)</p>
 <p>global Multidimensional Scaling using monoMDS</p>
 <p>Data: veganifyOTU(physeq) Distance: bray</p>
-<p>Dimensions: 4 Stress: 0.08892112 Stress type 1, weak ties Two convergent solutions found after 20 tries Scaling: centring, PC rotation, halfchange scaling Species: expanded scores based on ‘veganifyOTU(physeq)’</p>
+<p>Dimensions: 4 Stress: 0.08892112 Stress type 1, weak ties Best solution was repeated 4 times in 20 tries The best solution was from try 13 (random start) Scaling: centring, PC rotation, halfchange scaling Species: expanded scores based on ‘veganifyOTU(physeq)’</p>
 </section>
 <section id="plot-ordination" class="level3">
 <h3 class="anchored" data-anchor-id="plot-ordination">Plot Ordination</h3>
+<p>Plot the NMDS ordination.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>custPal <span class="ot">&lt;-</span> viridis<span class="sc">::</span><span class="fu">turbo</span>(<span class="at">n =</span> <span class="dv">4</span>)[<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="dv">4</span>)]</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -347,20 +350,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"Out/Figures/Figure1.svg"</span>, ordPlot, <span class="at">device =</span> <span class="st">"svg"</span>, <span class="at">bg =</span> <span class="st">"white"</span>, </span>
 <span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>       <span class="at">width =</span> <span class="fl">6.5</span>, <span class="at">height =</span> <span class="dv">6</span>, <span class="at">dpi =</span> <span class="dv">1200</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using the `size` aesthetic in this geom was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` in the `default_aes` field and elsewhere instead.</code></pre>
+</div>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="Out/Figures/Figure1.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">“Figure 1”</figcaption><p></p>
+<p></p><figcaption class="figure-caption">“Figure 1: NMDS Ordination”</figcaption><p></p>
 </figure>
 </div>
 </section>
 <section id="significance-test" class="level3">
 <h3 class="anchored" data-anchor-id="significance-test">Significance Test</h3>
+<p>Perform a PERMANOVA test.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dist <span class="ot">&lt;-</span> phyloseq<span class="sc">::</span><span class="fu">distance</span>(hiveMB, <span class="at">method =</span> <span class="st">"bray"</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">adonis2</span>(dist <span class="sc">~</span> Bees <span class="sc">+</span> Material <span class="sc">+</span> Year <span class="sc">+</span> Hive_ID, </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                <span class="fu">as</span>(<span class="fu">sample_data</span>(hiveMB), <span class="st">"data.frame"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dist <span class="ot">&lt;-</span> phyloseq<span class="sc">::</span><span class="fu">distance</span>(hiveMB, <span class="at">method =</span> <span class="st">"bray"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">adonis2</span>(dist <span class="sc">~</span> Bees <span class="sc">+</span> Material <span class="sc">+</span> Year <span class="sc">+</span> Hive_ID, </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                <span class="fu">as</span>(<span class="fu">sample_data</span>(hiveMB), <span class="st">"data.frame"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="kable-table">
 <table class="table table-sm table-striped">
@@ -430,19 +438,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </section>
 </section>
+<section id="abundance-table" class="level2">
+<h2 class="anchored" data-anchor-id="abundance-table">Abundance Table</h2>
+<p>We highlight the abundance of a number of key taxonomic groups referenced in the paper.</p>
+<div class="cell">
+
+</div>
+</section>
 <section id="export-data" class="level2">
 <h2 class="anchored" data-anchor-id="export-data">Export Data</h2>
 <p>We provide a copy of the <code>phyloseq</code> object that can be easily imported for further analysis in R.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(hiveMB, <span class="st">"Out/hiveMB.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(hiveMB, <span class="st">"Out/hiveMB.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="session-info" class="level2">
 <h2 class="anchored" data-anchor-id="session-info">Session Info</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>R version 4.2.1 (2022-06-23 ucrt)
+<pre><code>R version 4.2.2 (2022-10-31 ucrt)
 Platform: x86_64-w64-mingw32/x64 (64-bit)
 Running under: Windows 10 x64 (build 19045)
 
@@ -459,58 +474,59 @@ attached base packages:
 other attached packages:
  [1] svglite_2.1.0        ggtext_0.1.2         ggh4x_0.2.2         
  [4] concaveman_1.1.0     hrbrthemes_0.8.0     ggforce_0.4.1.9000  
- [7] vegan_2.6-2          lattice_0.20-45      permute_0.9-7       
+ [7] vegan_2.6-4          lattice_0.20-45      permute_0.9-7       
 [10] symbioteR_0.0.0.9000 magrittr_2.0.3       forcats_0.5.2       
-[13] stringr_1.4.1        dplyr_1.0.9          purrr_0.3.4         
-[16] readr_2.1.2          tidyr_1.2.0          tibble_3.1.7        
-[19] ggplot2_3.3.6        tidyverse_1.3.2      qiime2R_0.99.6      
-[22] phyloseq_1.40.0     
+[13] stringr_1.4.1        dplyr_1.0.10         purrr_0.3.5         
+[16] readr_2.1.3          tidyr_1.2.1          tibble_3.1.8        
+[19] ggplot2_3.4.0        tidyverse_1.3.2      qiime2R_0.99.6      
+[22] phyloseq_1.42.0     
 
 loaded via a namespace (and not attached):
   [1] readxl_1.4.1           backports_1.4.1        Hmisc_4.7-1           
-  [4] systemfonts_1.0.4      plyr_1.8.7             igraph_1.3.4          
-  [7] splines_4.2.1          GenomeInfoDb_1.34.0    digest_0.6.29         
+  [4] systemfonts_1.0.4      plyr_1.8.7             igraph_1.3.5          
+  [7] splines_4.2.2          GenomeInfoDb_1.34.2    digest_0.6.30         
  [10] foreach_1.5.2          htmltools_0.5.3        viridis_0.6.2         
  [13] qpcR_1.4-1             fansi_1.0.3            checkmate_2.1.0       
  [16] googlesheets4_1.0.1    cluster_2.1.4          tzdb_0.3.0            
- [19] Biostrings_2.64.0      modelr_0.1.9           extrafont_0.18        
- [22] vroom_1.5.7            extrafontdb_1.0        jpeg_0.1-9            
- [25] colorspace_2.0-3       rvest_1.0.3            haven_2.5.1           
- [28] xfun_0.31              crayon_1.5.2           RCurl_1.98-1.8        
- [31] jsonlite_1.8.0         survival_3.4-0         iterators_1.0.14      
- [34] ape_5.6-2              glue_1.6.2             polyclip_1.10-0       
- [37] gtable_0.3.1           gargle_1.2.1           zlibbioc_1.42.0       
- [40] XVector_0.36.0         V8_4.2.2               Rhdf5lib_1.18.2       
- [43] Rttf2pt1_1.3.11        BiocGenerics_0.44.0    DEoptimR_1.0-11       
- [46] scales_1.2.1           DBI_1.1.3              Rcpp_1.0.9            
- [49] viridisLite_0.4.1      gridtext_0.1.5         htmlTable_2.4.1       
- [52] bit_4.0.4              foreign_0.8-82         Formula_1.2-4         
- [55] stats4_4.2.1           DT_0.26                truncnorm_1.0-8       
- [58] htmlwidgets_1.5.4      httr_1.4.4             RColorBrewer_1.1-3    
- [61] ellipsis_0.3.2         pkgconfig_2.0.3        NADA_1.6-1.1          
- [64] farver_2.1.1           nnet_7.3-17            dbplyr_2.2.1          
- [67] deldir_1.0-6           utf8_1.2.2             labeling_0.4.2        
- [70] tidyselect_1.2.0       rlang_1.0.6            reshape2_1.4.4        
- [73] munsell_0.5.0          cellranger_1.1.0       tools_4.2.1           
- [76] cli_3.3.0              generics_0.1.3         ade4_1.7-19           
- [79] broom_1.0.1            evaluate_0.17          biomformat_1.26.0     
- [82] fastmap_1.1.0          yaml_2.3.5             bit64_4.0.5           
- [85] knitr_1.40             fs_1.5.2               robustbase_0.95-0     
- [88] rgl_0.109.6            nlme_3.1-157           xml2_1.3.3            
- [91] compiler_4.2.1         rstudioapi_0.14        curl_4.3.3            
- [94] png_0.1-7              zCompositions_1.4.0-1  reprex_2.0.2          
- [97] tweenr_2.0.1           stringi_1.7.8          highr_0.9             
-[100] gdtools_0.2.4          Matrix_1.4-1           multtest_2.52.0       
-[103] vctrs_0.4.1            pillar_1.8.1           lifecycle_1.0.3       
-[106] rhdf5filters_1.8.0     data.table_1.14.2      bitops_1.0-7          
-[109] R6_2.5.1               latticeExtra_0.6-30    renv_0.16.0           
-[112] gridExtra_2.3          IRanges_2.30.0         codetools_0.2-18      
-[115] MASS_7.3-58.1          assertthat_0.2.1       rhdf5_2.40.0          
-[118] minpack.lm_1.2-2       withr_2.5.0            S4Vectors_0.34.0      
-[121] GenomeInfoDbData_1.2.9 mgcv_1.8-40            parallel_4.2.1        
-[124] hms_1.1.2              grid_4.2.1             rpart_4.1.16          
-[127] rmarkdown_2.17         googledrive_2.0.0      Biobase_2.56.0        
-[130] lubridate_1.8.0        base64enc_0.1-3        interp_1.1-3          </code></pre>
+ [19] Biostrings_2.66.0      modelr_0.1.9           extrafont_0.18        
+ [22] vroom_1.6.0            extrafontdb_1.0        timechange_0.1.1      
+ [25] jpeg_0.1-9             colorspace_2.0-3       rvest_1.0.3           
+ [28] haven_2.5.1            xfun_0.34              crayon_1.5.2          
+ [31] RCurl_1.98-1.9         jsonlite_1.8.3         survival_3.4-0        
+ [34] iterators_1.0.14       ape_5.6-2              glue_1.6.2            
+ [37] polyclip_1.10-4        gtable_0.3.1           gargle_1.2.1          
+ [40] zlibbioc_1.44.0        XVector_0.38.0         V8_4.2.2              
+ [43] Rhdf5lib_1.20.0        Rttf2pt1_1.3.11        BiocGenerics_0.44.0   
+ [46] DEoptimR_1.0-11        scales_1.2.1           DBI_1.1.3             
+ [49] Rcpp_1.0.9             viridisLite_0.4.1      gridtext_0.1.5        
+ [52] htmlTable_2.4.1        bit_4.0.4              foreign_0.8-83        
+ [55] Formula_1.2-4          stats4_4.2.2           DT_0.26               
+ [58] truncnorm_1.0-8        htmlwidgets_1.5.4      httr_1.4.4            
+ [61] RColorBrewer_1.1-3     ellipsis_0.3.2         pkgconfig_2.0.3       
+ [64] NADA_1.6-1.1           farver_2.1.1           nnet_7.3-18           
+ [67] dbplyr_2.2.1           deldir_1.0-6           utf8_1.2.2            
+ [70] labeling_0.4.2         tidyselect_1.2.0       rlang_1.0.6           
+ [73] reshape2_1.4.4         munsell_0.5.0          cellranger_1.1.0      
+ [76] tools_4.2.2            cli_3.4.1              generics_0.1.3        
+ [79] ade4_1.7-20            broom_1.0.1            evaluate_0.18         
+ [82] biomformat_1.26.0      fastmap_1.1.0          yaml_2.3.6            
+ [85] bit64_4.0.5            knitr_1.40             fs_1.5.2              
+ [88] robustbase_0.95-0      rgl_0.110.2            nlme_3.1-160          
+ [91] xml2_1.3.3             compiler_4.2.2         rstudioapi_0.14       
+ [94] curl_4.3.3             png_0.1-7              zCompositions_1.4.0-1 
+ [97] reprex_2.0.2           tweenr_2.0.2           stringi_1.7.8         
+[100] highr_0.9              gdtools_0.2.4          Matrix_1.5-1          
+[103] multtest_2.54.0        vctrs_0.5.0            pillar_1.8.1          
+[106] lifecycle_1.0.3        rhdf5filters_1.10.0    data.table_1.14.4     
+[109] bitops_1.0-7           R6_2.5.1               latticeExtra_0.6-30   
+[112] renv_0.16.0            gridExtra_2.3          IRanges_2.32.0        
+[115] codetools_0.2-18       MASS_7.3-58.1          assertthat_0.2.1      
+[118] rhdf5_2.42.0           minpack.lm_1.2-2       withr_2.5.0           
+[121] S4Vectors_0.36.0       GenomeInfoDbData_1.2.9 mgcv_1.8-41           
+[124] parallel_4.2.2         hms_1.1.2              grid_4.2.2            
+[127] rpart_4.1.19           rmarkdown_2.17         googledrive_2.0.0     
+[130] Biobase_2.58.0         lubridate_1.9.0        base64enc_0.1-3       
+[133] interp_1.1-3          </code></pre>
 </div>
 </div>
 

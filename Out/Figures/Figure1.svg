@@ -142,21 +142,21 @@
 <text x='423.46' y='331.03' text-anchor='middle' style='font-size: 11.50px;fill: #4D4D4D; font-family: "Arial";' textLength='6.39px' lengthAdjust='spacingAndGlyphs'>3</text>
 <text x='432.60' y='342.75' text-anchor='end' style='font-size: 9.00px; font-family: "Arial";' textLength='31.51px' lengthAdjust='spacingAndGlyphs'>NMDS2</text>
 <text transform='translate(41.84,29.89) rotate(-90)' text-anchor='end' style='font-size: 9.00px; font-family: "Arial";' textLength='31.51px' lengthAdjust='spacingAndGlyphs'>NMDS1</text>
-<text x='115.10' y='368.85' style='font-size: 11.50px; font-family: "Arial";' textLength='40.90px' lengthAdjust='spacingAndGlyphs'>Material</text>
-<polygon points='166.81,368.29 173.92,368.29 173.92,361.18 166.81,361.18 ' style='stroke-width: 0.71; stroke: none; fill: #000000; fill-opacity: 0.80;' />
-<circle cx='220.05' cy='364.74' r='3.56' style='stroke-width: 0.71; stroke: none; fill: #000000; fill-opacity: 0.80;' />
-<polygon points='275.35,359.21 280.13,367.50 270.56,367.50 ' style='stroke-width: 0.71; stroke: none; fill: #000000; fill-opacity: 0.80;' />
-<polygon points='326.07,364.74 329.62,361.18 333.18,364.74 329.62,368.29 ' style='stroke-width: 0.71; stroke: none; fill: #000000; fill-opacity: 0.80;' />
-<text x='184.73' y='368.03' style='font-size: 9.20px; font-family: "Arial";' textLength='20.94px' lengthAdjust='spacingAndGlyphs'>Food</text>
-<text x='234.42' y='368.03' style='font-size: 9.20px; font-family: "Arial";' textLength='26.56px' lengthAdjust='spacingAndGlyphs'>Honey</text>
-<text x='289.71' y='368.03' style='font-size: 9.20px; font-family: "Arial";' textLength='25.54px' lengthAdjust='spacingAndGlyphs'>Pollen</text>
-<text x='343.99' y='368.03' style='font-size: 9.20px; font-family: "Arial";' textLength='33.19px' lengthAdjust='spacingAndGlyphs'>Propolis</text>
-<text x='109.11' y='397.59' style='font-size: 11.50px; font-family: "Arial";' textLength='40.91px' lengthAdjust='spacingAndGlyphs'>Species</text>
-<circle cx='164.39' cy='393.47' r='3.56' style='stroke-width: 0.71; stroke: #30123B; stroke-opacity: 0.80; fill: #30123B; fill-opacity: 0.80;' />
-<circle cx='238.58' cy='393.47' r='3.56' style='stroke-width: 0.71; stroke: #1AE4B6; stroke-opacity: 0.80; fill: #1AE4B6; fill-opacity: 0.80;' />
-<circle cx='320.62' cy='393.47' r='3.56' style='stroke-width: 0.71; stroke: #7A0403; stroke-opacity: 0.80; fill: #7A0403; fill-opacity: 0.80;' />
-<text x='178.76' y='396.71' style='font-size: 9.20px; font-style: italic; font-family: "Arial";' textLength='45.45px' lengthAdjust='spacingAndGlyphs'>A. australis</text>
-<text x='252.95' y='396.71' style='font-size: 9.20px; font-style: italic; font-family: "Arial";' textLength='53.30px' lengthAdjust='spacingAndGlyphs'>T. carbonaria</text>
-<text x='334.99' y='395.81' style='font-size: 9.20px; font-style: italic; font-family: "Arial";' textLength='48.18px' lengthAdjust='spacingAndGlyphs'>T. hockingsi</text>
+<text x='109.11' y='368.85' style='font-size: 11.50px; font-family: "Arial";' textLength='40.91px' lengthAdjust='spacingAndGlyphs'>Species</text>
+<circle cx='164.39' cy='364.74' r='3.56' style='stroke-width: 0.71; stroke: #30123B; stroke-opacity: 0.80; fill: #30123B; fill-opacity: 0.80;' />
+<circle cx='238.58' cy='364.74' r='3.56' style='stroke-width: 0.71; stroke: #1AE4B6; stroke-opacity: 0.80; fill: #1AE4B6; fill-opacity: 0.80;' />
+<circle cx='320.62' cy='364.74' r='3.56' style='stroke-width: 0.71; stroke: #7A0403; stroke-opacity: 0.80; fill: #7A0403; fill-opacity: 0.80;' />
+<text x='178.76' y='367.97' style='font-size: 9.20px; font-style: italic; font-family: "Arial";' textLength='45.45px' lengthAdjust='spacingAndGlyphs'>A. australis</text>
+<text x='252.95' y='367.97' style='font-size: 9.20px; font-style: italic; font-family: "Arial";' textLength='53.30px' lengthAdjust='spacingAndGlyphs'>T. carbonaria</text>
+<text x='334.99' y='367.07' style='font-size: 9.20px; font-style: italic; font-family: "Arial";' textLength='48.18px' lengthAdjust='spacingAndGlyphs'>T. hockingsi</text>
+<text x='115.10' y='397.59' style='font-size: 11.50px; font-family: "Arial";' textLength='40.90px' lengthAdjust='spacingAndGlyphs'>Material</text>
+<polygon points='166.81,397.03 173.92,397.03 173.92,389.92 166.81,389.92 ' style='stroke-width: 0.71; stroke: none; fill: #000000; fill-opacity: 0.80;' />
+<circle cx='220.05' cy='393.47' r='3.56' style='stroke-width: 0.71; stroke: none; fill: #000000; fill-opacity: 0.80;' />
+<polygon points='275.35,387.94 280.13,396.24 270.56,396.24 ' style='stroke-width: 0.71; stroke: none; fill: #000000; fill-opacity: 0.80;' />
+<polygon points='326.07,393.47 329.62,389.92 333.18,393.47 329.62,397.03 ' style='stroke-width: 0.71; stroke: none; fill: #000000; fill-opacity: 0.80;' />
+<text x='184.73' y='396.76' style='font-size: 9.20px; font-family: "Arial";' textLength='20.94px' lengthAdjust='spacingAndGlyphs'>Food</text>
+<text x='234.42' y='396.76' style='font-size: 9.20px; font-family: "Arial";' textLength='26.56px' lengthAdjust='spacingAndGlyphs'>Honey</text>
+<text x='289.71' y='396.76' style='font-size: 9.20px; font-family: "Arial";' textLength='25.54px' lengthAdjust='spacingAndGlyphs'>Pollen</text>
+<text x='343.99' y='396.76' style='font-size: 9.20px; font-family: "Arial";' textLength='33.19px' lengthAdjust='spacingAndGlyphs'>Propolis</text>
 </g>
 </svg>
