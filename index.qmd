@@ -181,13 +181,14 @@ abPlot <- hiveMBRel |>
     facet_wrap(~ Bees) +
     theme_ipsum(base_family = "sans") +
     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
-          strip.text = element_text(face = "italic"))
+          strip.text = element_text(face = "italic"),
+          legend.position = "none")
 
-ggsave("Out/Figures/Figure2.svg", abPlot, device = "svg", bg = "white", 
+ggsave("Out/Figures/Figure2.png", abPlot, device = "png", bg = "white", 
        width = 8, height = 4, dpi = 1200)
 ```
 
-!["Figure 2: Average Relative Abundance"](Out/Figures/Figure2.svg)
+!["Figure 2: Average Relative Abundance"](Out/Figures/Figure2.png)
 
 ## Export Data
 
