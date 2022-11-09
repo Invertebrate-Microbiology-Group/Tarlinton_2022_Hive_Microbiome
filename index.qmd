@@ -156,7 +156,7 @@ adonis2(dist ~ Bees + Material + Year + Hive_ID,
                 as(sample_data(hiveMB), "data.frame"))
 ```
 
-## Taxonomix Abundance
+## Taxonomic Abundance
 
 ### Key Genera
 
