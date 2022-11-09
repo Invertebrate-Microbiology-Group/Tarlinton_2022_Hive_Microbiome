@@ -156,14 +156,38 @@ adonis2(dist ~ Bees + Material + Year + Hive_ID,
                 as(sample_data(hiveMB), "data.frame"))
 ```
 
-## Abundance Table
+## Taxonomix Abundance
+
+### Key Genera
 
 We highlight the abundance of a number of key taxonomic groups referenced in 
 the paper.
 
 ```{r}
+abPlot <- hiveMBRel |> 
+  tax_glom("Genus") |> 
+  psmelt() |> 
+  group_by(Genus, Material, Bees) |> 
+  mutate(Bees = case_when(Bees == "Austroplebia australis" ~ "A. australis",
+                          Bees == "Tetragonula carbonaria" ~ "T. carbonaria",
+                          Bees == "Tetragonula hockingsi" ~ "T. hockingsi")) |> 
+  summarise(Abundance = mean(Abundance)) |> 
+  filter(Genus %in% c("Lactobacillus", "Bombella", "Gilliamella",
+                      "Snodgrassella")) |> 
+  ggplot(aes(x = Material, y = Genus, fill = Abundance, 
+              label = round(Abundance, 2))) +
+    geom_tile() +
+    geom_text(colour = "white") +
+    facet_wrap(~ Bees) +
+    theme_ipsum(base_family = "sans") +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+          strip.text = element_text(face = "italic"))
 
+ggsave("Out/Figures/Figure2.svg", abPlot, device = "svg", bg = "white", 
+       width = 8, height = 4, dpi = 1200)
 ```
+
+!["Figure 2: Average Relative Abundance"](Out/Figures/Figure2.svg)
 
 ## Export Data
 

@@ -169,7 +169,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#plot-ordination" id="toc-plot-ordination" class="nav-link" data-scroll-target="#plot-ordination">Plot Ordination</a></li>
   <li><a href="#significance-test" id="toc-significance-test" class="nav-link" data-scroll-target="#significance-test">Significance Test</a></li>
   </ul></li>
-  <li><a href="#abundance-table" id="toc-abundance-table" class="nav-link" data-scroll-target="#abundance-table">Abundance Table</a></li>
+  <li><a href="#taxonomix-abundance" id="toc-taxonomix-abundance" class="nav-link" data-scroll-target="#taxonomix-abundance">Taxonomix Abundance</a>
+  <ul class="collapse">
+  <li><a href="#key-genera" id="toc-key-genera" class="nav-link" data-scroll-target="#key-genera">Key Genera</a></li>
+  </ul></li>
   <li><a href="#export-data" id="toc-export-data" class="nav-link" data-scroll-target="#export-data">Export Data</a></li>
   <li><a href="#session-info" id="toc-session-info" class="nav-link" data-scroll-target="#session-info">Session Info</a></li>
   </ul>
@@ -438,24 +441,56 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </section>
 </section>
-<section id="abundance-table" class="level2">
-<h2 class="anchored" data-anchor-id="abundance-table">Abundance Table</h2>
+<section id="taxonomix-abundance" class="level2">
+<h2 class="anchored" data-anchor-id="taxonomix-abundance">Taxonomix Abundance</h2>
+<section id="key-genera" class="level3">
+<h3 class="anchored" data-anchor-id="key-genera">Key Genera</h3>
 <p>We highlight the abundance of a number of key taxonomic groups referenced in the paper.</p>
 <div class="cell">
-
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>abPlot <span class="ot">&lt;-</span> hiveMBRel <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tax_glom</span>(<span class="st">"Genus"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">psmelt</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Genus, Material, Bees) <span class="sc">|&gt;</span> </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Bees =</span> <span class="fu">case_when</span>(Bees <span class="sc">==</span> <span class="st">"Austroplebia australis"</span> <span class="sc">~</span> <span class="st">"A. australis"</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>                          Bees <span class="sc">==</span> <span class="st">"Tetragonula carbonaria"</span> <span class="sc">~</span> <span class="st">"T. carbonaria"</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>                          Bees <span class="sc">==</span> <span class="st">"Tetragonula hockingsi"</span> <span class="sc">~</span> <span class="st">"T. hockingsi"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Abundance =</span> <span class="fu">mean</span>(Abundance)) <span class="sc">|&gt;</span> </span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Genus <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Lactobacillus"</span>, <span class="st">"Bombella"</span>, <span class="st">"Gilliamella"</span>,</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"Snodgrassella"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Material, <span class="at">y =</span> Genus, <span class="at">fill =</span> Abundance, </span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">label =</span> <span class="fu">round</span>(Abundance, <span class="dv">2</span>))) <span class="sc">+</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_tile</span>() <span class="sc">+</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> Bees) <span class="sc">+</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_ipsum</span>(<span class="at">base_family =</span> <span class="st">"sans"</span>) <span class="sc">+</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>, <span class="at">hjust=</span><span class="dv">1</span>),</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>          <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"italic"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'Genus', 'Material'. You can override using
+the `.groups` argument.</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"Out/Figures/Figure2.svg"</span>, abPlot, <span class="at">device =</span> <span class="st">"svg"</span>, <span class="at">bg =</span> <span class="st">"white"</span>, </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">8</span>, <span class="at">height =</span> <span class="dv">4</span>, <span class="at">dpi =</span> <span class="dv">1200</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Out/Figures/Figure2.svg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">“Figure 2: Average Relative Abundance”</figcaption><p></p>
+</figure>
+</div>
+</section>
 </section>
 <section id="export-data" class="level2">
 <h2 class="anchored" data-anchor-id="export-data">Export Data</h2>
 <p>We provide a copy of the <code>phyloseq</code> object that can be easily imported for further analysis in R.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(hiveMB, <span class="st">"Out/hiveMB.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(hiveMB, <span class="st">"Out/hiveMB.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="session-info" class="level2">
 <h2 class="anchored" data-anchor-id="session-info">Session Info</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>R version 4.2.2 (2022-10-31 ucrt)
 Platform: x86_64-w64-mingw32/x64 (64-bit)
