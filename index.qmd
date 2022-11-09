@@ -102,7 +102,7 @@ ord
 
 Plot the NMDS ordination.
 
-```{r}
+```{r, warning=FALSE}
 custPal <- viridis::turbo(n = 4)[c(1:2, 4)]
 
 ordPlot <- plot_ordination(hiveMBRel, ord, justDF = TRUE) |> 
@@ -163,7 +163,7 @@ adonis2(dist ~ Bees + Material + Year + Hive_ID,
 We highlight the abundance of a number of key taxonomic groups referenced in 
 the paper.
 
-```{r}
+```{r, message=FALSE}
 abPlot <- hiveMBRel |> 
   tax_glom("Genus") |> 
   psmelt() |> 
