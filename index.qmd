@@ -198,6 +198,8 @@ further analysis in R.
 saveRDS(hiveMB, "Out/hiveMB.rds")
 ```
 
+[Download it here.](Out/hiveMB.rds)
+
 ## Session Info
 
 ```{r}

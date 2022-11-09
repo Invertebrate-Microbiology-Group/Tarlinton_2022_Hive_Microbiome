@@ -60,7 +60,7 @@
     "href": "index.html#export-data",
     "title": "Australian Stingless Bee Nest Microbiome",
     "section": "Export Data",
-    "text": "Export Data\nWe provide a copy of the phyloseq object that can be easily imported for further analysis in R.\n\nsaveRDS(hiveMB, \"Out/hiveMB.rds\")"
+    "text": "Export Data\nWe provide a copy of the phyloseq object that can be easily imported for further analysis in R.\n\nsaveRDS(hiveMB, \"Out/hiveMB.rds\")\n\nDownload it here."
   },
   {
     "objectID": "index.html#session-info",
