@@ -3,7 +3,7 @@ title: Australian Stingless Bee Nest Microbiome
 subtitle: |
   Supplementary material for the paper *16S Amplicon Metabarcoding from Nest 
   Materials of Native Australian Stingless Bees*
-date: 2022-11-08
+date: 2022-11-10
 ---
 
 ## Introduction
