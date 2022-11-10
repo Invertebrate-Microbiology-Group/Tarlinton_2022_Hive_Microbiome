@@ -151,6 +151,8 @@ ggsave("Out/Figures/Figure1.svg", ordPlot, device = "svg", bg = "white",
 Perform a PERMANOVA test.
 
 ```{r}
+#| tbl-cap: "Table 1: PERMANOVA Results"
+
 dist <- phyloseq::distance(hiveMB, method = "bray")
 adonis2(dist ~ Bees + Material + Year + Hive_ID, 
                 as(sample_data(hiveMB), "data.frame"))
@@ -195,11 +197,13 @@ ggsave("Out/Figures/Figure2.png", abPlot, device = "png", bg = "white",
 ### Gammaproteobacteria
 
 ```{r, message=FALSE}
+#| tbl-cap: "Table 2: Mean Proportion of Gammaproteobacteria"
+
 hiveMBRel |> 
   tax_glom("Class") |> 
   psmelt() |> 
   group_by(Bees, Material, Class) |>  
-  summarise(Abundance = round(mean(Abundance), 2)) |> 
+  summarise(Proportion = round(mean(Abundance), 2)) |> 
   filter(Class == "Gammaproteobacteria") |> 
   select(!Class)
 ```

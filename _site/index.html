@@ -374,6 +374,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell-output-display">
 <div class="kable-table">
 <table class="table table-sm table-striped">
+<caption>Table 1: PERMANOVA Results </caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;"></th>
@@ -486,17 +487,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tax_glom</span>(<span class="st">"Class"</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">psmelt</span>() <span class="sc">|&gt;</span> </span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Bees, Material, Class) <span class="sc">|&gt;</span>  </span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Abundance =</span> <span class="fu">round</span>(<span class="fu">mean</span>(Abundance), <span class="dv">2</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Proportion =</span> <span class="fu">round</span>(<span class="fu">mean</span>(Abundance), <span class="dv">2</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Class <span class="sc">==</span> <span class="st">"Gammaproteobacteria"</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">!</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="kable-table">
 <table class="table table-sm table-striped">
+<caption>Table 2: Mean Proportion of Gammaproteobacteria </caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Bees</th>
 <th style="text-align: left;">Material</th>
-<th style="text-align: right;">Abundance</th>
+<th style="text-align: right;">Proportion</th>
 </tr>
 </thead>
 <tbody>
