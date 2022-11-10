@@ -192,6 +192,19 @@ ggsave("Out/Figures/Figure2.png", abPlot, device = "png", bg = "white",
 
 ## Export Data
 
+### Gammaproteobacteria
+
+```{r, message=FALSE}
+hiveMBRel |> 
+  tax_glom("Class") |> 
+  psmelt() |> 
+  group_by(Bees, Material, Class) |>  
+  summarise(Abundance = round(mean(Abundance), 2)) |> 
+  filter(Class == "Gammaproteobacteria") |> 
+  select(!Class)
+```
+
+
 We provide a copy of the `phyloseq` object that can be easily imported for 
 further analysis in R.
 

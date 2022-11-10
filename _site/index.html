@@ -173,7 +173,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul class="collapse">
   <li><a href="#key-genera" id="toc-key-genera" class="nav-link" data-scroll-target="#key-genera">Key Genera</a></li>
   </ul></li>
-  <li><a href="#export-data" id="toc-export-data" class="nav-link" data-scroll-target="#export-data">Export Data</a></li>
+  <li><a href="#export-data" id="toc-export-data" class="nav-link" data-scroll-target="#export-data">Export Data</a>
+  <ul class="collapse">
+  <li><a href="#gammaproteobacteria" id="toc-gammaproteobacteria" class="nav-link" data-scroll-target="#gammaproteobacteria">Gammaproteobacteria</a></li>
+  </ul></li>
   <li><a href="#session-info" id="toc-session-info" class="nav-link" data-scroll-target="#session-info">Session Info</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/Invertebrate-Microbiology-Group/Tarlinton_2022_Hive_Microbiome/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
@@ -476,16 +479,103 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="export-data" class="level2">
 <h2 class="anchored" data-anchor-id="export-data">Export Data</h2>
+<section id="gammaproteobacteria" class="level3">
+<h3 class="anchored" data-anchor-id="gammaproteobacteria">Gammaproteobacteria</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>hiveMBRel <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tax_glom</span>(<span class="st">"Class"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">psmelt</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Bees, Material, Class) <span class="sc">|&gt;</span>  </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Abundance =</span> <span class="fu">round</span>(<span class="fu">mean</span>(Abundance), <span class="dv">2</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Class <span class="sc">==</span> <span class="st">"Gammaproteobacteria"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">!</span>Class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="kable-table">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Bees</th>
+<th style="text-align: left;">Material</th>
+<th style="text-align: right;">Abundance</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Austroplebia australis</td>
+<td style="text-align: left;">Food</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Austroplebia australis</td>
+<td style="text-align: left;">Honey</td>
+<td style="text-align: right;">0.50</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Austroplebia australis</td>
+<td style="text-align: left;">Pollen</td>
+<td style="text-align: right;">0.53</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Austroplebia australis</td>
+<td style="text-align: left;">Propolis</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Tetragonula carbonaria</td>
+<td style="text-align: left;">Food</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Tetragonula carbonaria</td>
+<td style="text-align: left;">Honey</td>
+<td style="text-align: right;">0.11</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Tetragonula carbonaria</td>
+<td style="text-align: left;">Pollen</td>
+<td style="text-align: right;">0.04</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Tetragonula carbonaria</td>
+<td style="text-align: left;">Propolis</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Tetragonula hockingsi</td>
+<td style="text-align: left;">Food</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Tetragonula hockingsi</td>
+<td style="text-align: left;">Honey</td>
+<td style="text-align: right;">0.26</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Tetragonula hockingsi</td>
+<td style="text-align: left;">Pollen</td>
+<td style="text-align: right;">0.10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Tetragonula hockingsi</td>
+<td style="text-align: left;">Propolis</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
 <p>We provide a copy of the <code>phyloseq</code> object that can be easily imported for further analysis in R.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(hiveMB, <span class="st">"Out/hiveMB.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(hiveMB, <span class="st">"Out/hiveMB.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><a href="Out/hiveMB.rds">Download it here.</a></p>
+</section>
 </section>
 <section id="session-info" class="level2">
 <h2 class="anchored" data-anchor-id="session-info">Session Info</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>R version 4.2.2 (2022-10-31 ucrt)
 Platform: x86_64-w64-mingw32/x64 (64-bit)
