@@ -195,8 +195,6 @@ ggsave("Out/Figures/Figure2.png", abPlot, device = "png", bg = "white",
 
 !["Figure 2: Average Proportion"](Out/Figures/Figure2.png)
 
-## Export Data
-
 ### Gammaproteobacteria
 
 We note the abundance of ASVs from the class Gammaproteobacteria.
@@ -213,6 +211,7 @@ hiveMBRel |>
   select(!Class)
 ```
 
+## Export Data
 
 We provide a copy of the `phyloseq` object that can be easily imported for 
 further analysis in R.
