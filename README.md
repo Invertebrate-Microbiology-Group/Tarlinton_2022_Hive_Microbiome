@@ -2,6 +2,7 @@
 
 <!-- badges: start -->
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey.svg)](LICENSE.md)
+[![DOI](https://zenodo.org/badge/517895941.svg)](https://zenodo.org/badge/latestdoi/517895941)
 <!-- badges: end -->
 
 Authors: Boyd Tarlinton, Flavia Carmelina Massaro, Caroline Hauxwell
