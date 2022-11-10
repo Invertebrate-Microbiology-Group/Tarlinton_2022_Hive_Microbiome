@@ -16,3 +16,5 @@ We describe how the raw metabarcoding datasets were processed using `QIIME 2`
 and further analysed in `R` to produce the figure included in our paper. This 
 material is presented as a GitHub Pages site made with `Quarto`. An `renv` 
 snapshot is provided to aid with reproducibility.
+
+View the live content [here](https://invertebrate-microbiology-group.github.io/Tarlinton_2022_Hive_Microbiome/).
