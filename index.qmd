@@ -196,6 +196,8 @@ ggsave("Out/Figures/Figure2.png", abPlot, device = "png", bg = "white",
 
 ### Gammaproteobacteria
 
+We note the abundance of ASVs from the class Gammaproteobacteria.
+
 ```{r, message=FALSE}
 #| tbl-cap: "Table 2: Mean Proportion of Gammaproteobacteria"
 
