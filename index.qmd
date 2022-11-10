@@ -173,11 +173,11 @@ abPlot <- hiveMBRel |>
   mutate(Bees = case_when(Bees == "Austroplebia australis" ~ "A. australis",
                           Bees == "Tetragonula carbonaria" ~ "T. carbonaria",
                           Bees == "Tetragonula hockingsi" ~ "T. hockingsi")) |> 
-  summarise(Abundance = mean(Abundance)) |> 
+  summarise(Proportion = mean(Abundance)) |> 
   filter(Genus %in% c("Lactobacillus", "Bombella", "Gilliamella",
                       "Snodgrassella")) |> 
-  ggplot(aes(x = Material, y = Genus, fill = Abundance, 
-              label = round(Abundance, 2))) +
+  ggplot(aes(x = Material, y = Genus, fill = Proportion, 
+              label = round(Proportion, 2))) +
     geom_tile() +
     geom_text(colour = "white") +
     facet_wrap(~ Bees) +
@@ -190,7 +190,7 @@ ggsave("Out/Figures/Figure2.png", abPlot, device = "png", bg = "white",
        width = 8, height = 4, dpi = 1200)
 ```
 
-!["Figure 2: Average Relative Abundance"](Out/Figures/Figure2.png)
+!["Figure 2: Average Proportion"](Out/Figures/Figure2.png)
 
 ## Export Data
 

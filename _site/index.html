@@ -454,11 +454,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Bees =</span> <span class="fu">case_when</span>(Bees <span class="sc">==</span> <span class="st">"Austroplebia australis"</span> <span class="sc">~</span> <span class="st">"A. australis"</span>,</span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                          Bees <span class="sc">==</span> <span class="st">"Tetragonula carbonaria"</span> <span class="sc">~</span> <span class="st">"T. carbonaria"</span>,</span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                          Bees <span class="sc">==</span> <span class="st">"Tetragonula hockingsi"</span> <span class="sc">~</span> <span class="st">"T. hockingsi"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Abundance =</span> <span class="fu">mean</span>(Abundance)) <span class="sc">|&gt;</span> </span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Proportion =</span> <span class="fu">mean</span>(Abundance)) <span class="sc">|&gt;</span> </span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Genus <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Lactobacillus"</span>, <span class="st">"Bombella"</span>, <span class="st">"Gilliamella"</span>,</span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"Snodgrassella"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Material, <span class="at">y =</span> Genus, <span class="at">fill =</span> Abundance, </span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">label =</span> <span class="fu">round</span>(Abundance, <span class="dv">2</span>))) <span class="sc">+</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Material, <span class="at">y =</span> Genus, <span class="at">fill =</span> Proportion, </span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">label =</span> <span class="fu">round</span>(Proportion, <span class="dv">2</span>))) <span class="sc">+</span></span>
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_tile</span>() <span class="sc">+</span></span>
 <span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
 <span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> Bees) <span class="sc">+</span></span>
@@ -473,7 +473,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="Out/Figures/Figure2.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">“Figure 2: Average Relative Abundance”</figcaption><p></p>
+<p></p><figcaption class="figure-caption">“Figure 2: Average Proportion”</figcaption><p></p>
 </figure>
 </div>
 </section>
