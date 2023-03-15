@@ -8,8 +8,9 @@
 Authors: Boyd Tarlinton, Flavia Carmelina Massaro, Caroline Hauxwell
 
 This repository contains the code and documentation required to reproduce the 
-results presented in our paper "16S Amplicon Metabarcoding from Nest Materials 
-of Native Australian Stingless Bees". Beta diversity statistics describing 
+results presented in our paper ["16S Amplicon Metabarcoding of the Nest 
+Materials of Native Australian Stingless Bees"](https://journals.asm.org/doi/10.1128/mra.01181-22).
+Beta diversity statistics describing 
 microbiome variability associated with the different bee species and material 
 types sampled are calculated, visualised, and used for hypothesis testing.
 
